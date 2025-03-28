@@ -1,0 +1,24 @@
+{
+  "float": [
+    {
+      "name": "page_text_font_size",
+      "value": "50fp"
+    },
+    {
+      "name": "title_font_size",
+      "value": "30fp"
+    },
+    {
+      "name": "content_font_size",
+      "value": "18fp"
+    },
+    {
+      "name": "button_radius",
+      "value": "8fp"
+    },
+    {
+      "name": "section_spacing",
+      "value": "24fp"
+    }
+  ]
+}

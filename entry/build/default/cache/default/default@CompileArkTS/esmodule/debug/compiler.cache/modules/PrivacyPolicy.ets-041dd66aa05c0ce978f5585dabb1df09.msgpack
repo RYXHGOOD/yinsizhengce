@@ -1,0 +1,296 @@
+Ôr@Ÿªassertions¤code´customTransformCache¬dependencies¢id¤meta±moduleSideEffects¬originalCode±originalSourcemap«resolvedIds®sourcemapChainµsyntheticNamedExportsµtransformDependencies®transformFiles¨cacheAstÔrAÚÖif (!("finalizeConstruction" in ViewPU.prototype)) {
+    Reflect.set(ViewPU.prototype, "finalizeConstruction", () => { });
+}
+import router from '@ohos.router';
+import preferences from '@ohos.data.preferences';
+import promptAction from '@ohos.promptAction';
+class PrivacyPolicy extends ViewPU {
+    constructor(parent, params, __localStorage, elmtId = -1, paramsLambda = undefined, extraInfo) {
+        super(parent, __localStorage, elmtId, extraInfo);
+        if (typeof paramsLambda === "function") {
+            this.paramsGenerator_ = paramsLambda;
+        }
+        this.__privacyAgreed = this.createStorageLink('privacyAgreed', false, "privacyAgreed");
+        this.__privacyRejected = this.createStorageLink('privacyRejected', false, "privacyRejected");
+        this.setInitiallyProvidedValue(params);
+        this.declareWatch("privacyAgreed", this.onAgreeChange);
+        this.finalizeConstruction();
+    }
+    setInitiallyProvidedValue(params) {
+    }
+    updateStateVars(params) {
+    }
+    purgeVariableDependenciesOnElmtId(rmElmtId) {
+        this.__privacyAgreed.purgeDependencyOnElmtId(rmElmtId);
+        this.__privacyRejected.purgeDependencyOnElmtId(rmElmtId);
+    }
+    aboutToBeDeleted() {
+        this.__privacyAgreed.aboutToBeDeleted();
+        this.__privacyRejected.aboutToBeDeleted();
+        SubscriberManager.Get().delete(this.id__());
+        this.aboutToBeDeletedInternal();
+    }
+    get privacyAgreed() {
+        return this.__privacyAgreed.get();
+    }
+    set privacyAgreed(newValue) {
+        this.__privacyAgreed.set(newValue);
+    }
+    get privacyRejected() {
+        return this.__privacyRejected.get();
+    }
+    set privacyRejected(newValue) {
+        this.__privacyRejected.set(newValue);
+    }
+    onAgreeChange() {
+        if (this.privacyAgreed) {
+            router.replaceUrl({ url: 'pages/Index' });
+        }
+    }
+    async saveAgreementStatus(agreed) {
+        try {
+            const context = getContext(this);
+            const pref = await preferences.getPreferences(context, 'privacy_prefs');
+            await pref.put('privacyAgreed', agreed);
+            await pref.put('privacyRejected', !agreed);
+            await pref.flush();
+        }
+        catch (error) {
+            const err = error;
+            console.error('ä¿å­˜åè®®çŠ¶æ€å¤±è´¥:', JSON.stringify(err));
+        }
+    }
+    initialRender() {
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Scroll.create();
+            Scroll.scrollBar(BarState.Off);
+            Scroll.backgroundColor({ "id": 16777234, "type": 10001, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+        }, Scroll);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Column.create();
+        }, Column);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create({ "id": 16777233, "type": 10003, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Text.fontSize({ "id": 16777241, "type": 10002, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Text.fontColor({ "id": 16777235, "type": 10001, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Text.margin({ top: 24, bottom: 16 });
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Divider.create();
+            Divider.strokeWidth(1);
+            Divider.color({ "id": 16777235, "type": 10001, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Divider.margin({ bottom: 24 });
+        }, Divider);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Text.create({ "id": 16777232, "type": 10003, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Text.fontSize({ "id": 16777239, "type": 10002, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Text.fontColor({ "id": 16777236, "type": 10001, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Text.lineHeight(24);
+            Text.padding({ left: 16, right: 16 });
+        }, Text);
+        Text.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Row.create();
+            Row.width('100%');
+            Row.padding(20);
+            Row.margin({ top: 32 });
+        }, Row);
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Button.createWithLabel({ "id": 16777231, "type": 10003, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Button.width('45%');
+            Button.height(48);
+            Button.backgroundColor({ "id": 16777237, "type": 10001, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Button.fontColor(Color.White);
+            Button.borderRadius({ "id": 16777238, "type": 10002, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Button.onClick(() => {
+                promptAction.showDialog({
+                    title: 'ç¡®è®¤é€€å‡º',
+                    message: 'ç¡®å®šè¦æ‹’ç»åè®®å¹¶é€€å‡ºåº”ç”¨å—ï¼Ÿ',
+                    buttons: [
+                        {
+                            text: 'å–æ¶ˆ',
+                            color: { "id": 16777236, "type": 10001, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" }
+                        },
+                        {
+                            text: 'ç¡®å®š',
+                            color: { "id": 16777237, "type": 10001, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" }
+                        }
+                    ]
+                }).then(result => {
+                    if (result.index === 1) {
+                        // ä¿®æ”¹å¼€å§‹ï¼šæ·»åŠ åº”ç”¨é€€å‡ºé€»è¾‘
+                        this.saveAgreementStatus(false).then(() => {
+                            const context = getContext(this);
+                            context.terminateSelf().catch((err) => {
+                                promptAction.showToast({ message: 'é€€å‡ºå¤±è´¥ï¼Œè¯·é‡è¯•' });
+                            });
+                        }); // ä¿®æ”¹ç»“æŸ
+                    }
+                });
+            });
+        }, Button);
+        Button.pop();
+        this.observeComponentCreation2((elmtId, isInitialRender) => {
+            Button.createWithLabel({ "id": 16777228, "type": 10003, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Button.width('45%');
+            Button.height(48);
+            Button.margin({ left: { "id": 16777240, "type": 10002, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" } });
+            Button.backgroundColor({ "id": 16777235, "type": 10001, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Button.fontColor(Color.White);
+            Button.borderRadius({ "id": 16777238, "type": 10002, params: [], "bundleName": "com.example.myapplication", "moduleName": "entry" });
+            Button.onClick(async () => {
+                await this.saveAgreementStatus(true);
+                this.privacyAgreed = true;
+            });
+        }, Button);
+        Button.pop();
+        Row.pop();
+        Column.pop();
+        Scroll.pop();
+    }
+    rerender() {
+        this.updateDirtyElements();
+    }
+    static getEntryName() {
+        return "PrivacyPolicy";
+    }
+}
+registerNamedRoute(() => new PrivacyPolicy(undefined, {}), "", { bundleName: "com.example.myapplication", moduleName: "entry", pagePath: "pages/PrivacyPolicy", pageFullPath: "entry/src/main/ets/pages/PrivacyPolicy", integratedHsp: "false", moduleType: "followWithHap" });
+//# sourceMappingURL=PrivacyPolicy.js.mapÂ“Ù[ hvigor_ignore_D:_huaweidev_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÙe hvigor_ignore_D:_huaweidev_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.data.preferences.d.tsÙa hvigor_ignore_D:_huaweidev_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.promptAction.d.tsÙ\C:\Users\RYXH\DevEcoStudioProjects\MyApplication2\entry\src\main\ets\pages\PrivacyPolicy.etsÔrBšªmoduleName±isLocalDependency¯isNodeEntryFile§pkgPath±belongProjectPath§pkgNameªpkgVersion±dependencyPkgInfo°belongModulePath¬shouldEmitJs¥entryÃÂÙ7C:\Users\RYXH\DevEcoStudioProjects\MyApplication2\entryÙ1C:\Users\RYXH\DevEcoStudioProjects\MyApplication2¥entry¥1.0.0Ô  Ù7C:\Users\RYXH\DevEcoStudioProjects\MyApplication2\entryÃÃÚnimport router from '@ohos.router';
+import preferences from '@ohos.data.preferences';
+import { BusinessError } from '@kit.BasicServicesKit';
+import common from '@ohos.app.ability.common';
+import promptAction from '@ohos.promptAction';
+
+@Entry
+@Component
+struct PrivacyPolicy {
+  @StorageLink('privacyAgreed') @Watch('onAgreeChange') privacyAgreed: boolean = false;
+  @StorageLink('privacyRejected') privacyRejected: boolean = false;
+
+  onAgreeChange(): void {
+    if (this.privacyAgreed) {
+      router.replaceUrl({ url: 'pages/Index' });
+    }
+  }
+
+  async saveAgreementStatus(agreed: boolean): Promise<void> {
+    try {
+      const context = getContext(this) as common.Context;
+      const pref = await preferences.getPreferences(context, 'privacy_prefs');
+      await pref.put('privacyAgreed', agreed);
+      await pref.put('privacyRejected', !agreed);
+      await pref.flush();
+    } catch (error) {
+      const err: BusinessError = error as BusinessError;
+      console.error('ä¿å­˜åè®®çŠ¶æ€å¤±è´¥:', JSON.stringify(err));
+    }
+  }
+
+  build() {
+    Scroll() {
+      Column() {
+        Text($r('app.string.privacy_title'))
+          .fontSize($r('app.float.title_font_size'))
+          .fontColor($r('app.color.primary_color'))
+          .margin({ top: 24, bottom: 16 })
+
+        Divider()
+          .strokeWidth(1)
+          .color($r('app.color.primary_color'))
+          .margin({ bottom: 24 })
+
+        Text($r('app.string.privacy_content'))
+          .fontSize($r('app.float.content_font_size'))
+          .fontColor($r('app.color.text_primary'))
+          .lineHeight(24)
+          .padding({ left: 16, right: 16 })
+
+        Row() {
+          Button($r('app.string.disagree_btn'))
+            .width('45%')
+            .height(48)
+            .backgroundColor($r('app.color.warning_color'))
+            .fontColor(Color.White)
+            .borderRadius($r('app.float.button_radius'))
+            .onClick(() => {
+              promptAction.showDialog({
+                title: 'ç¡®è®¤é€€å‡º',
+                message: 'ç¡®å®šè¦æ‹’ç»åè®®å¹¶é€€å‡ºåº”ç”¨å—ï¼Ÿ',
+                buttons: [
+                  {
+                    text: 'å–æ¶ˆ',
+                    color: $r('app.color.text_primary')
+                  },
+                  {
+                    text: 'ç¡®å®š',
+                    color: $r('app.color.warning_color')
+                  }
+                ]
+              }).then(result => {
+                if (result.index === 1) {
+                  // ä¿®æ”¹å¼€å§‹ï¼šæ·»åŠ åº”ç”¨é€€å‡ºé€»è¾‘
+                  this.saveAgreementStatus(false).then(() => {
+                    const context = getContext(this) as common.UIAbilityContext;
+                    context.terminateSelf().catch((err: BusinessError) => {
+                      promptAction.showToast({ message: 'é€€å‡ºå¤±è´¥ï¼Œè¯·é‡è¯•' });
+                    });
+                  });   // ä¿®æ”¹ç»“æŸ
+                }
+              });
+            })
+
+          Button($r('app.string.agree_btn'))
+            .width('45%')
+            .height(48)
+            .margin({ left: $r('app.float.section_spacing') })
+            .backgroundColor($r('app.color.primary_color'))
+            .fontColor(Color.White)
+            .borderRadius($r('app.float.button_radius'))
+            .onClick(async () => {
+              await this.saveAgreementStatus(true);
+              this.privacyAgreed = true;
+            })
+        }
+        .width('100%')
+        .padding(20)
+        .margin({ top: 32 })
+      }
+    }
+    .scrollBar(BarState.Off)
+    .backgroundColor($r('app.color.background_color'))
+  }
+}
+ÀÔrC“¬@ohos.router¶@ohos.data.preferences²@ohos.promptActionÔrD—ªassertions¨external¢id¤meta±moduleSideEffectsªresolvedByµsyntheticNamedExportsAÃÙ[ hvigor_ignore_D:_huaweidev_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.router.d.tsÔrE‘¯hostModulesInfo’ÔrF’²hostDependencyName®hostModuleName¬@ohos.router¥entryF¬@ohos.router¥entryÃªoh-resolveÂDAÃÙe hvigor_ignore_D:_huaweidev_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.data.preferences.d.tsAÃªoh-resolveÂDAÃÙa hvigor_ignore_D:_huaweidev_DevEco Studio_sdk_default_openharmony_ets_api_@ohos.promptAction.d.tsAÃªoh-resolveÂ“ÔrG–§version¤fileªsourceRoot§sources¥names¨mappings°PrivacyPolicy.js ‘±PrivacyPolicy.etsÜ —–”    ”  ”  ”  ”!  !”"  "–”   ” ” ” ”0 0”1 1–”   ” ” ” ”- -”. .’” ” ‘”  ””6 	”ÌE 	”ÌG 	ÌQ”ÌL 	ÌV””8 
+”ÌI 
+ ”ÌK 
+=”ÌP 
+ÌB‘” .’” 	8” 	ÌE’” 	8” 	ÌE’” 
+"” 
+1’” 
+"” 
+1’” ” –” ” ” ” ” ”  œ” ” ” ” ” ”  ”# ”% ”2 ,”4 .”5 /”6 0‘”	 ’” ” –” ”	 ”
+ ” ” ”$ +’” ” ™” ” ” ” ”&  ”' !”+ %”, 8”- 9” ” ” ” ” ”* $”+ %”9 3”: 4”ÌA ;”ÌC =”ÌR ÌL”ÌS ÌM”ÌT ÌN›” ” ” ” ” ” ”* $”, &”2 ,”3 -”4 .œ” ” ” ” ” ” ”, &”. (”/ )”5 /”6 0”7 1—” ” ” ” ” ” ” ‘”	 ”” ” ” ” –” ” ” ” !” 7” 8Ÿ” ” ” ” ” ”% ”' !”+ %”, &”5 /”6 0”9 3”: 4”; 5”< 6‘”	 ’” ” ‘” ’”  ”  
+˜”  ”  
+” Ìe” Ìe” Ìe”% Ìe”& Ìe”) Ìe””  ”  
+” Ìf”" Ìf’” !” !’” "” "”” "” "” #” #”” "” "” $” $” "” "” %” %” %” %” %” %”! %”# %”) %#”+ %%”- %'”/ %)’” "” "’” '” '–” '” '” (” (”  (”! (”” '” '” )” )š” '” '” *” *” *” *”# *”% *”' *”) * ’” ,” ,”” ,” ,” -” -”” ,” ,” .” .–” ,” ,” /” /” /” /” ,” ,” 0” 0” 0” 0” 0”! 0”# 0”% 0”* 0$”, 0&”. 0(”0 0*’” ,” ,’” 2” 2–” 2” 2” Ì`	” Ì`” Ì`” Ì`–” 2” 2” Ìa	” Ìa” Ìa” Ìaš” 2” 2” Ìb	” Ìb” Ìb” Ìb” Ìb” Ìb”  Ìb”" Ìb’” 3
+” 3–” 3
+” 3” 4” 4” 4” 4–” 3
+” 3” 5” 5” 5” 5”” 3
+” 3” 6”" 6˜” 3
+” 3” 7” 7” 7”" 7”# 7”( 7"”” 3
+” 3” 8” 8—” 3
+” 3” 9” 9” 9” 9”  9•” :” :” :”' :%”( :&”” ;” ;” ;”! ;”” <” <” <”- <)“” =” =” =‘” >”” ?”  ?”" ?”& ?“” Ì@”! Ì@”Ì’ Ì@7‘” ÌA‘” ÌB”” ÌC”  ÌC”" ÌC”& ÌC“” ÌD”! ÌD”Ì’ ÌD8‘” ÌE‘” ÌF˜” ÌG” ÌG” ÌG” ÌG” ÌG” ÌG” ÌG”! ÌG˜” ÌH” ÌH” ÌH” ÌH”$ ÌH ”) ÌH%”* ÌH&”, ÌH(’” ÌI”( ÌI"œ” ÌJ” ÌJ” ÌJ”0 ÌJ*”1 ÌJ+”6 ÌJ0”7 ÌJ1”8 ÌJ2”< ÌJ6”= ÌJ7”Ì@ ÌJ:”ÌB ÌJ<™” ÌK”" ÌK”) ÌK!”, ÌK$”6 ÌK.”7 ÌK/”; ÌK3”< ÌKÌO”= ÌKÌPœ” ÌL”# ÌL”$ ÌL”1 ÌL)”3 ÌL+”4 ÌL,”9 ÌL1”: ÌL2”; ÌL3”> ÌLÌE”Ì@ ÌLÌG”ÌB ÌLÌIœ”  ÌM”, ÌM"”- ÌM#”6 ÌM,”7 ÌM-”9 ÌM/”Ì@ ÌM6”ÌB ÌM8”ÌL ÌMÌB”ÌN ÌMÌD”ÌO ÌMÌE”ÌP ÌMÌF”” ÌN” ÌN” ÌN” ÌN–” ÌO” ÌO” ÌO” ÌO” ÌO”# ÌO‘” ÌP”” ÌQ” ÌQ” ÌQ” ÌQ’” ÌR” ÌR’” 3
+” 3’” ÌT
+” ÌT–” ÌT
+” ÌT” ÌU” ÌU” ÌU” ÌU–” ÌT
+” ÌT” ÌV” ÌV” ÌV” ÌV™” ÌT
+” ÌT” ÌW” ÌW” ÌW” ÌW”  ÌW”Ì‘ ÌW;”Ì“ ÌW=”” ÌT
+” ÌT” ÌX”" ÌX˜” ÌT
+” ÌT” ÌY” ÌY” ÌY”" ÌY”# ÌY”( ÌY"”” ÌT
+” ÌT” ÌZ” ÌZ˜” ÌT
+” ÌT” Ì[” Ì[” Ì[”  Ì[”$ Ì[”& Ì[ ™” Ì\” Ì\” Ì\” Ì\”. Ì\,”/ Ì\-”3 Ì\1”4 Ì\2”5 Ì\3—” Ì]” Ì]” Ì]”" Ì] ”% Ì]#”) Ì]'”* Ì](’” Ì^” Ì^’” ÌT
+” ÌT’” 2” 2’” !” !’”  ”  
+‘” ÌgÔrH–§version¤file§sources®sourcesContent¥names¨mappingsÀ‘À‘ÀÜ  ‘”    ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”  	 ‘”  
+ ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”   ‘”    ‘”  ! ‘”  " ‘”  # ‘”  $ ‘”  % ‘”  & ‘”  ' ‘”  ( ‘”  ) ‘”  * ‘”  + ‘”  , ‘”  - ‘”  . ‘”  / ‘”  0 ‘”  1 ‘”  2 ‘”  3 ‘”  4 ‘”  5 ‘”  6 ‘”  7 ‘”  8 ‘”  9 ‘”  : ‘”  ; ‘”  < ‘”  = ‘”  > ‘”  ? ‘”  Ì@ ‘”  ÌA ‘”  ÌB ‘”  ÌC ‘”  ÌD ‘”  ÌE ‘”  ÌF ‘”  ÌG ‘”  ÌH ‘”  ÌI ‘”  ÌJ ‘”  ÌK ‘”  ÌL ‘”  ÌM ‘”  ÌN ‘”  ÌO ‘”  ÌP ‘”  ÌQ ‘”  ÌR ‘”  ÌS ‘”  ÌT ‘”  ÌU ‘”  ÌV ‘”  ÌW ‘”  ÌX ‘”  ÌY ‘”  ÌZ ‘”  Ì[ ‘”  Ì\ ‘”  Ì] ‘”  Ì^ ‘”  Ì_ ‘”  Ì` ‘”  Ìa ‘”  Ìb ‘”  Ìc ‘”  Ìd ‘”  Ìe ‘”  Ìf ‘”  Ìg ‘”  Ìh ‘”  Ìi ‘”  Ìj ‘”  Ìk ‘”  Ìl ‘”  Ìm ‘”  Ìn ‘”  Ìo ‘”  Ìp ‘”  Ìq ‘”  Ìr ‘”  Ìs ‘”  Ìt ‘”  Ìu ‘”  Ìv ‘”  Ìw ‘”  Ìx ‘”  Ìy ‘”  Ìz ‘”  Ì{ ‘”  Ì| ‘”  Ì} ‘”  Ì~ ‘”  Ì ‘”  Ì€ ‘”  Ì ‘”  Ì‚ ‘”  Ìƒ ‘”  Ì„ ‘”  Ì… ‘”  Ì† ‘”  Ì‡ ‘”  Ìˆ ‘”  Ì‰ ‘”  ÌŠ ‘”  Ì‹ ‘”  ÌŒ ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì ‘”  Ì‘ ‘”  Ì’ ‘”  Ì“ ‘”  Ì” ‘”  Ì• ‘”  Ì– ‘”  Ì— ‘”  Ì˜ ‘”  Ì™ ‘”  Ìš ‘”  Ì› ‘”  Ìœ ‘”  Ì ‘”  Ì ‘”  ÌŸ ÔrI’§missing¦pluginÃ¦genAbcÂÔ  ÔrJ”²dynamicImportCache¹exportAllDeclarationCache»exportNamedDeclarationCache«importCache“ÔrK•¤type¥start£endªspecifiers¦source±ImportDeclarationÌ€Ì¢‘ÔrL”¤type¥start£end¥local¶ImportDefaultSpecifierÌ‡ÌÔrM”¤type¥start£end¤nameªIdentifierÌ‡Ì¦routerÔrN•¤type¥start£end¥value£raw§LiteralÌ“Ì¡¬@ohos.router®'@ohos.router'K±ImportDeclarationÌ¤ÌÕ‘L¶ImportDefaultSpecifierÌ«Ì¶MªIdentifierÌ«Ì¶«preferencesN§LiteralÌ¼ÌÔ¶@ohos.data.preferences¸'@ohos.data.preferences'K±ImportDeclarationÌ×Í‘L¶ImportDefaultSpecifierÌŞÌêMªIdentifierÌŞÌê¬promptActionN§LiteralÌğÍ²@ohos.promptAction´'@ohos.promptAction'
